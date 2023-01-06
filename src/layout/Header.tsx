@@ -1,25 +1,27 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
+import {
+  AppBar,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material/";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import { Button, ButtonGroup, Drawer } from "@mui/material";
 import { Link } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
+import { ThemeToggle } from "./ThemeToggle";
 import {
   onTemperatureUnitChanged,
   TemperatureUnits,
-} from "../../app/store/userInfoSlice";
+} from "../app/store/userInfoSlice";
 import { useDispatch } from "react-redux";
 
-export function Header() {
+function Header() {
   const dispatch = useDispatch();
 
   const [openNav, setOpenNav] = useState<boolean>(false);
@@ -217,3 +219,5 @@ export function Header() {
     </Box>
   );
 }
+
+export { Header };

@@ -1,11 +1,9 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import { onThemeToggleChanged } from "../../app/store/userInfoSlice";
+import { FormControlLabel, FormGroup, Switch } from "@mui/material/";
+import { onThemeToggleChanged } from "../app/store/userInfoSlice";
 import { useDispatch } from "react-redux";
-import { useUserPreferencesSelector } from "../../app/store/userSelectors";
+import { useUserPreferencesSelector } from "../app/store/userSelectors";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -30,7 +28,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     },
   },
   "& .MuiSwitch-thumb": {
-    backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
+    backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#42a5f5",
     width: 32,
     height: 32,
     "&:before": {
@@ -54,7 +52,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-export default function ThemeToggle() {
+function ThemeToggle() {
   const dispatch = useDispatch();
 
   const userPreferences = useUserPreferencesSelector();
@@ -82,3 +80,5 @@ export default function ThemeToggle() {
     </FormGroup>
   );
 }
+
+export { ThemeToggle };

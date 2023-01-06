@@ -1,8 +1,7 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import { AppBar, Container, Typography } from "@mui/material";
+import { AppBar, Box, Container, Typography } from "@mui/material";
 
-export default function Footer() {
+function Footer() {
   return (
     <Container maxWidth="lg">
       <AppBar
@@ -29,3 +28,5 @@ export default function Footer() {
     </Container>
   );
 }
+
+export { Footer };

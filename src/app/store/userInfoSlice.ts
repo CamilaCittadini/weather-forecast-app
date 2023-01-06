@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ForecastData } from "../../services/currentAndForecast";
+import type { ForecastData } from "../../interfaces/index";
 
 export type TemperatureUnits = "celsius" | "fahrenheit" | "kelvin";
 export interface userInfoType {

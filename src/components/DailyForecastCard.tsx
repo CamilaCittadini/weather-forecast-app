@@ -1,13 +1,10 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import React from "react";
+import { Card, CardContent, Stack, Typography } from "@mui/material/";
+import NavigationIcon from "@mui/icons-material/Navigation";
 import ThermostatOutlinedIcon from "@mui/icons-material/ThermostatOutlined";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
-import { Button, ButtonGroup, Stack } from "@mui/material";
-import { WeatherTypes } from "../services/currentAndForecast";
-import { skyConditionIcon, TemperatureUnits } from "./WeatherCard";
-import NavigationIcon from "@mui/icons-material/Navigation";
+import { WeatherTypes } from "../interfaces/index";
+import { skyConditionIcon } from "./WeatherCard";
 import { applyConversion, applyConversionUnit } from "./WeatherCard";
 import { useUserPreferencesSelector } from "../app/store/userSelectors";
 interface dailyForecastCardProps {

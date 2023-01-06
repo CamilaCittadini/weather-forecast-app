@@ -1,14 +1,11 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { useUserLocation } from "../../app/store/userSelectors";
-import {
-  getCurrentWeather,
-  getForecast,
-} from "../../services/currentAndForecast";
-import Typography from "@mui/material/Typography";
-import DailyForecastCard from "../DailyForecastCard";
+import { useUserLocation } from "../app/store/userSelectors";
+import { getCurrentWeather, getForecast } from "../services/currentAndForecast";
+import { Typography } from "@mui/material/";
+import DailyForecastCard from "../components/DailyForecastCard";
 import { useDispatch } from "react-redux";
-import { onLocalForecastObtained } from "../../app/store/userInfoSlice";
+import { onLocalForecastObtained } from "../app/store/userInfoSlice";
 
 const Forecast = () => {
   const dispatch = useDispatch();
@@ -78,7 +75,7 @@ const Forecast = () => {
   );
 };
 
-export default Forecast;
+export { Forecast };
 
 const formatDate = (date: Date) => {
   return `${date.getMonth() + 1}/${date.getDate()}`;

@@ -26,25 +26,29 @@ const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
   },
 }));
 
+export interface Option {
+  label: string;
+  lat: number;
+  lon: number;
+}
+interface SearchInputProps {
+  onChange: (value: Option) => void;
+  onInputChange: (s: string) => void;
+  options: Option[];
+}
+
 const SearchInput = ({
-  value,
   onChange,
   onInputChange,
   options,
   ...rest
-}: {
-  value?: any;
-  onChange?: any;
-  onInputChange?: any;
-  options: any[];
-}) => {
+}: SearchInputProps) => {
   return (
     <Search sx={{ width: "300px" }} {...rest}>
       <StyledAutocomplete
         disablePortal
-        value={value}
         onInputChange={(e, v) => onInputChange(v)}
-        onChange={(e, v) => onChange(v)}
+        onChange={(e, v) => onChange(v as Option)}
         options={options}
         renderInput={(params) => <TextField {...params} label="City" />}
       />
@@ -52,4 +56,4 @@ const SearchInput = ({
   );
 };
 
-export default SearchInput;
+export { SearchInput };

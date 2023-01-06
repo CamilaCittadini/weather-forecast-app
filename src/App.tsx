@@ -2,7 +2,7 @@ import "./App.css";
 import { store } from "./app/store/store";
 import { Provider } from "react-redux";
 import { QueryClientProvider, QueryClient } from "react-query";
-import { Layout } from "./components/layout/Layout";
+import { Layout } from "./layout/Layout";
 
 const queryClient = new QueryClient();
 

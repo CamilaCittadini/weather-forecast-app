@@ -1,10 +1,10 @@
-import { Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import SearchInput from "../SearchInput";
-import { getCity } from "../../services/geoposition";
+import { Stack, Typography } from "@mui/material";
+import { Option, SearchInput } from "../components/SearchInput";
+import { getCity } from "../services/geoposition";
 import { useQuery } from "react-query";
-import WeatherCard from "../WeatherCard";
-import { getCurrentWeather } from "../../services/currentAndForecast";
+import WeatherCard from "../components/WeatherCard";
+import { getCurrentWeather } from "../services/currentAndForecast";
 
 const Search = () => {
   const [inputCity, setInputCity] = useState<string>("");
@@ -40,9 +40,7 @@ const Search = () => {
           Search the weather conditions in your city
         </Typography>
         <SearchInput
-          onChange={(value: { label: string; lat: number; lon: number }) =>
-            setSelectedCity(value)
-          }
+          onChange={(value: Option) => setSelectedCity(value)}
           onInputChange={(value: string) => setInputCity(value)}
           options={
             city?.data?.map((city) => {
@@ -54,6 +52,7 @@ const Search = () => {
             }) || []
           }
         />
+
         {weather && (
           <WeatherCard
             city={weather?.data?.name}
@@ -69,7 +68,7 @@ const Search = () => {
   );
 };
 
-export default Search;
+export { Search };
 
 const getCityLabel = (city?: string, state?: string, country?: string) => {
   return `${formattedLabel(city)} ${formattedLabel(state)} ${country}`;

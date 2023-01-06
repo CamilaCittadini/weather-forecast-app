@@ -1,58 +1,5 @@
 import axios from "axios";
-
-interface LocationParamsType {
-  lat?: number;
-  lon?: number;
-}
-
-interface Weather {
-  data?: WeatherData;
-}
-
-export interface WindType {
-  deg?: number;
-  speed?: number;
-}
-
-interface MainType {
-  temp?: number;
-  temp_max?: number;
-  temp_min?: number;
-  humidity?: number;
-}
-
-interface WeatherData {
-  id?: number;
-  main?: MainType;
-  name?: string;
-  sys?: {
-    country: string;
-  };
-  wind?: WindType;
-  weather?: WeatherType[];
-}
-
-interface WeatherType {
-  main?: WeatherTypes;
-}
-
-export type WeatherTypes = "Clear" | "Rain" | "Snow" | "Clouds" | "-";
-
-interface Forecast {
-  data?: ForecastData;
-}
-
-export interface ForecastData {
-  list: ListItem[];
-}
-
-interface ListItem {
-  dt_txt: string;
-  main: MainType;
-  pop: number;
-  weather?: WeatherType[];
-  wind?: WindType;
-}
+import type { Forecast, LocationParamsType, Weather } from "../interfaces";
 
 //Api call to retrieve current weather conditions based on location
 export const getCurrentWeather = async (location: LocationParamsType) => {

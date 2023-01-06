@@ -1,19 +1,21 @@
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
-import ThermostatOutlinedIcon from "@mui/icons-material/ThermostatOutlined";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import InvertColorsOutlinedIcon from "@mui/icons-material/InvertColorsOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import ThermostatOutlinedIcon from "@mui/icons-material/ThermostatOutlined";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { IconButton } from "@mui/material";
-import { Stack } from "@mui/system";
-import { WeatherTypes } from "../services/currentAndForecast";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  IconButton,
+  Typography,
+  Stack,
+} from "@mui/material";
+import { WeatherTypes } from "../interfaces/index";
 import { kelvinToCelsius, kelvinToFahrenheit } from "../utils/conversion";
 import { useUserPreferencesSelector } from "../app/store/userSelectors";
 

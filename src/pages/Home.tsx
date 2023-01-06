@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { getCurrentWeather } from "../../services/currentAndForecast";
-import { useUserLocation } from "../../app/store/userSelectors";
-import WeatherCard from "../WeatherCard";
+import { getCurrentWeather } from "../services/currentAndForecast";
+import { useUserLocation } from "../app/store/userSelectors";
+import WeatherCard from "../components/WeatherCard";
 
 const Home = () => {
   const location = useUserLocation();
@@ -34,4 +34,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export { Home };
