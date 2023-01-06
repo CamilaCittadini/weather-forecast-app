@@ -90,7 +90,7 @@ export function Header() {
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
-          Advanced search
+          Search
         </Link>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}></MenuItem>

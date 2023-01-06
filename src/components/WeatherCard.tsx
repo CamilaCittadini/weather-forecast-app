@@ -1,5 +1,4 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -7,40 +6,43 @@ import Typography from "@mui/material/Typography";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import AcUnitOutlinedIcon from "@mui/icons-material/AcUnitOutlined";
 import CloudOutlinedIcon from "@mui/icons-material/CloudOutlined";
-import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
 import ThermostatOutlinedIcon from "@mui/icons-material/ThermostatOutlined";
 import InvertColorsOutlinedIcon from "@mui/icons-material/InvertColorsOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { IconButton } from "@mui/material";
+import { Button, ButtonGroup, IconButton } from "@mui/material";
 import { Stack } from "@mui/system";
 import { WeatherTypes } from "../services/currentAndForecast";
+import NavigationIcon from "@mui/icons-material/Navigation";
+import { kelvinToCelsius, kelvinToFahrenheit } from "../utils/conversion";
 
 interface weatherCardProps {
   city?: string;
+  country?: string;
   skyCondition?: WeatherTypes;
   temperature?: number;
-  wind?: number;
+  windDirection?: number;
+  windSpeed?: number;
   humidity?: number;
 }
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  ></Box>
-);
+export type TemperatureUnits = "celsius" | "fahrenheit" | "kelvin";
 
 export default function WeatherCard({
   city = "-",
+  country = "",
   skyCondition = "-",
   temperature = 0,
-  wind = 0,
+  windDirection = 0,
+  windSpeed = 0,
   humidity = 0,
 }: weatherCardProps) {
+  const [temperatureUnit, setTemperatureUnit] =
+    useState<TemperatureUnits>("celsius");
+
   return (
-    <Card sx={{ minWidth: 200, maxWidth: 300 }}>
+    <Card sx={{ minWidth: 200, maxWidth: 350 }}>
       <CardContent>
         <Stack
           direction={"row"}
@@ -52,7 +54,7 @@ export default function WeatherCard({
             color="text.secondary"
             gutterBottom
           >
-            Weather in
+            Today's weather in
           </Typography>
           <CardActions>
             <IconButton size="small" color="primary">
@@ -61,7 +63,7 @@ export default function WeatherCard({
           </CardActions>
         </Stack>
         <Typography variant="h5" component="div">
-          {city}
+          {city}, {country}
         </Typography>
         <Stack
           direction={"row"}
@@ -84,7 +86,10 @@ export default function WeatherCard({
               sx={{ marginY: 1 }}
             >
               <ThermostatOutlinedIcon color="error" />
-              <p style={{ margin: 0 }}>{temperature}</p>
+              <p style={{ margin: 0 }}>
+                {applyConversion[temperatureUnit](temperature) +
+                  applyConversionUnit[temperatureUnit]}
+              </p>
             </Stack>
             <Stack
               direction={"row"}
@@ -92,8 +97,11 @@ export default function WeatherCard({
               spacing={1}
               sx={{ marginY: 1 }}
             >
-              <AirOutlinedIcon color="primary" />
-              <p style={{ margin: 0 }}>{wind} km/h</p>
+              <NavigationIcon
+                color="primary"
+                style={{ transform: `rotate(${windDirection}deg)` }}
+              />
+              <p style={{ margin: 0 }}>{windSpeed} km/h</p>
             </Stack>
             <Stack
               direction={"row"}
@@ -106,15 +114,39 @@ export default function WeatherCard({
             </Stack>
           </Stack>
         </Typography>
+        <Stack direction={"row"} justifyContent="end" alignItems="center">
+          <ButtonGroup
+            variant="outlined"
+            aria-label="outlined button group"
+            size="small"
+          >
+            <Button onClick={() => setTemperatureUnit("kelvin")}>K</Button>
+            <Button onClick={() => setTemperatureUnit("celsius")}>°C</Button>
+            <Button onClick={() => setTemperatureUnit("fahrenheit")}>°F</Button>
+          </ButtonGroup>
+        </Stack>
       </CardContent>
     </Card>
   );
 }
 
-const skyConditionIcon: Record<WeatherTypes, React.ReactNode> = {
+export const skyConditionIcon: Record<WeatherTypes, React.ReactNode> = {
   Rain: <ThunderstormIcon fontSize="large" sx={{ color: "indigo" }} />,
   Clear: <WbSunnyOutlinedIcon fontSize="large" sx={{ color: "yellow" }} />,
   Snow: <AcUnitOutlinedIcon fontSize="large" sx={{ color: "cyan" }} />,
   Clouds: <CloudOutlinedIcon fontSize="large" sx={{ color: "blue" }} />,
   "-": <ErrorOutlineOutlinedIcon fontSize="large" color="error" />,
+};
+
+export const applyConversion: Record<TemperatureUnits, (n: number) => number> =
+  {
+    celsius: kelvinToCelsius,
+    kelvin: (kelvin: number) => kelvin,
+    fahrenheit: kelvinToFahrenheit,
+  };
+
+export const applyConversionUnit: Record<TemperatureUnits, string> = {
+  celsius: "°C",
+  kelvin: "K",
+  fahrenheit: "°F",
 };

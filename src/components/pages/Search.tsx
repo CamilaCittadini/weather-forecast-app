@@ -1,5 +1,5 @@
-import { Stack } from "@mui/material";
-import React, { ChangeEvent, useState } from "react";
+import { Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
 import SearchInput from "../SearchInput";
 import { getCity } from "../../services/geoposition";
 import { useQuery } from "react-query";
@@ -8,18 +8,21 @@ import { getCurrentWeather } from "../../services/currentAndForecast";
 
 const Search = () => {
   const [inputCity, setInputCity] = useState<string>("");
+  const [selectedCity, setSelectedCity] = useState<{
+    label: string;
+    lat: number;
+    lon: number;
+  } | null>(null);
   const { data: city } = useQuery(["get-city", inputCity], () =>
     getCity(inputCity)
   );
 
-  console.log("aaaa", city);
-
   const { data: weather } = useQuery(
-    ["current-weather", city],
+    ["current-weather", selectedCity],
     () =>
       getCurrentWeather({
-        lat: city?.data?.[0]?.latitude,
-        lon: city?.data?.[0]?.longitude,
+        lat: selectedCity?.lat,
+        lon: selectedCity?.lon,
       }),
     {
       enabled: !!city,
@@ -27,19 +30,37 @@ const Search = () => {
   );
 
   return (
-    <Stack direction="row" justifyContent="center" sx={{ marginTop: 10 }}>
+    <Stack direction="row" justifyContent="center" sx={{ paddingTop: 10 }}>
       <Stack direction="column" alignItems={"center"} spacing={5}>
+        <Typography
+          sx={{ fontSize: 20, fontWeight: 800 }}
+          color="text.secondary"
+          gutterBottom
+        >
+          Search the weather conditions in your city
+        </Typography>
         <SearchInput
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setInputCity(e.target.value)
+          onChange={(value: { label: string; lat: number; lon: number }) =>
+            setSelectedCity(value)
+          }
+          onInputChange={(value: string) => setInputCity(value)}
+          options={
+            city?.data?.map((city) => {
+              return {
+                label: getCityLabel(city?.name, city?.state, city?.country),
+                lat: city?.lat,
+                lon: city?.lon,
+              };
+            }) || []
           }
         />
         {weather && (
           <WeatherCard
             city={weather?.data?.name}
+            country={weather?.data?.sys?.country}
             humidity={weather?.data?.main?.humidity}
             temperature={weather?.data?.main?.temp}
-            wind={weather?.data?.wind?.speed}
+            windSpeed={weather?.data?.wind?.speed}
             skyCondition={weather?.data?.weather?.[0]?.main}
           />
         )}
@@ -49,3 +70,11 @@ const Search = () => {
 };
 
 export default Search;
+
+const getCityLabel = (city?: string, state?: string, country?: string) => {
+  return `${formattedLabel(city)} ${formattedLabel(state)} ${country}`;
+};
+
+const formattedLabel = (str?: string) => {
+  return str ? `${str},` : "";
+};

@@ -1,16 +1,12 @@
 import React from "react";
-
-import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
+import { Autocomplete, TextField } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   color: theme.palette.primary.main,
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  border: "solid",
-  borderWidth: "1px",
-  borderColor: theme.palette.primary.main,
+
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -19,7 +15,7 @@ const Search = styled("div")(({ theme }) => ({
   width: "100%",
 }));
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
+const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
   width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -30,26 +26,27 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const SearchInput = ({ onChange, ...rest }: { onChange: any }) => {
+const SearchInput = ({
+  value,
+  onChange,
+  onInputChange,
+  options,
+  ...rest
+}: {
+  value?: any;
+  onChange?: any;
+  onInputChange?: any;
+  options: any[];
+}) => {
   return (
-    <Search {...rest}>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledTextField
-        placeholder="Search…"
-        inputProps={{ "aria-label": "search" }}
-        onChange={onChange}
+    <Search sx={{ width: "300px" }} {...rest}>
+      <StyledAutocomplete
+        disablePortal
+        value={value}
+        onInputChange={(e, v) => onInputChange(v)}
+        onChange={(e, v) => onChange(v)}
+        options={options}
+        renderInput={(params) => <TextField {...params} label="City" />}
       />
     </Search>
   );

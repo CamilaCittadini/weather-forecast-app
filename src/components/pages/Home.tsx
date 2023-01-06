@@ -23,9 +23,11 @@ const Home = () => {
     <div style={{ paddingTop: 30, paddingLeft: 30 }}>
       <WeatherCard
         city={weather?.data?.name}
+        country={weather?.data?.sys?.country}
         humidity={weather?.data?.main?.humidity}
         temperature={weather?.data?.main?.temp}
-        wind={weather?.data?.wind?.speed}
+        windDirection={weather?.data?.wind?.deg}
+        windSpeed={weather?.data?.wind?.speed}
         skyCondition={weather?.data?.weather?.[0]?.main}
       />
     </div>

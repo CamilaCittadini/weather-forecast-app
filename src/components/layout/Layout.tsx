@@ -8,6 +8,8 @@ import Search from "../pages/Search";
 import Forecast from "../pages/Forecast";
 import { useDispatch } from "react-redux";
 import { onLocationObtained } from "../../app/store/userInfoSlice";
+import Paper from "@mui/material/Paper";
+import Footer from "./Footer";
 
 const Layout = () => {
   const userPreference = useUserPreferencesSelector();
@@ -31,12 +33,14 @@ const Layout = () => {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/search" element={<Search />}></Route>
-        <Route path="/forecast" element={<Forecast />}></Route>
-      </Routes>
-      <div>footer</div>
+      <Paper sx={{ height: "85vh" }} elevation={0}>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/search" element={<Search />}></Route>
+          <Route path="/forecast" element={<Forecast />}></Route>
+        </Routes>
+      </Paper>
+      <Footer />
     </ThemeProvider>
   );
 };

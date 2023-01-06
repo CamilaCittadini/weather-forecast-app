@@ -9,17 +9,26 @@ interface Weather {
   data?: WeatherData;
 }
 
+export interface WindType {
+  deg?: number;
+  speed?: number;
+}
+
+interface MainType {
+  temp?: number;
+  temp_max?: number;
+  temp_min?: number;
+  humidity?: number;
+}
+
 interface WeatherData {
-  main?: {
-    temp?: number;
-    temp_max?: number;
-    temp_min?: number;
-    humidity?: number;
-  };
+  id?: number;
+  main?: MainType;
   name?: string;
-  wind?: {
-    speed?: number;
+  sys?: {
+    country: string;
   };
+  wind?: WindType;
   weather?: WeatherType[];
 }
 
@@ -28,6 +37,22 @@ interface WeatherType {
 }
 
 export type WeatherTypes = "Clear" | "Rain" | "Snow" | "Clouds" | "-";
+
+interface Forecast {
+  data?: ForecastData;
+}
+
+export interface ForecastData {
+  list: ListItem[];
+}
+
+interface ListItem {
+  dt_txt: string;
+  main: MainType;
+  pop: number;
+  weather?: WeatherType[];
+  wind?: WindType;
+}
 
 //Api call to retrieve current weather conditions based on location
 export const getCurrentWeather = async (location: LocationParamsType) => {
@@ -38,9 +63,9 @@ export const getCurrentWeather = async (location: LocationParamsType) => {
 };
 
 //Api call to retrieve forecast based on location
-export const getForecast = async (location: LocationParamsType) => {
-  return await axios<any, Weather>({
-    url: `http://api.openweathermap.org/data/2.5/forecast/daily?lat=${location.lat}&lon=${location.lon}&appid=e4bec65652816c75b5ccb48883534027`,
+export const getForecast = async (id?: number) => {
+  return await axios<any, Forecast>({
+    url: `http://api.openweathermap.org/data/2.5/forecast?id=${id}&appid=e4bec65652816c75b5ccb48883534027`,
     method: "GET",
   });
 };
