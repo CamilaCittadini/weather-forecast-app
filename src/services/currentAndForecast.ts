@@ -12,7 +12,7 @@ export const getCurrentWeather = async (location: LocationParamsType) => {
 //Api call to retrieve forecast based on location
 export const getForecast = async (id?: number) => {
   return await axios<any, Forecast>({
-    url: `http://api.openweathermap.org/data/2.5/forecast?id=${id}&appid=${process.env.REACT_APP_API_KEY}`,
+    url: `https://api.openweathermap.org/data/2.5/forecast?id=${id}&appid=${process.env.REACT_APP_API_KEY}`,
     method: "GET",
   });
 };
