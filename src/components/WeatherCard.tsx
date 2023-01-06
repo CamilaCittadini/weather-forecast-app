@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,11 +10,12 @@ import InvertColorsOutlinedIcon from "@mui/icons-material/InvertColorsOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import { Button, ButtonGroup, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Stack } from "@mui/system";
 import { WeatherTypes } from "../services/currentAndForecast";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { kelvinToCelsius, kelvinToFahrenheit } from "../utils/conversion";
+import { useUserPreferencesSelector } from "../app/store/userSelectors";
 
 interface weatherCardProps {
   city?: string;
@@ -38,8 +38,7 @@ export default function WeatherCard({
   windSpeed = 0,
   humidity = 0,
 }: weatherCardProps) {
-  const [temperatureUnit, setTemperatureUnit] =
-    useState<TemperatureUnits>("celsius");
+  const { temperatureUnit } = useUserPreferencesSelector();
 
   return (
     <Card sx={{ minWidth: 200, maxWidth: 350 }}>
@@ -114,17 +113,6 @@ export default function WeatherCard({
             </Stack>
           </Stack>
         </Typography>
-        <Stack direction={"row"} justifyContent="end" alignItems="center">
-          <ButtonGroup
-            variant="outlined"
-            aria-label="outlined button group"
-            size="small"
-          >
-            <Button onClick={() => setTemperatureUnit("kelvin")}>K</Button>
-            <Button onClick={() => setTemperatureUnit("celsius")}>°C</Button>
-            <Button onClick={() => setTemperatureUnit("fahrenheit")}>°F</Button>
-          </ButtonGroup>
-        </Stack>
       </CardContent>
     </Card>
   );

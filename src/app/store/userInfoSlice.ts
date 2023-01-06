@@ -2,15 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { ForecastData } from "../../services/currentAndForecast";
 
+export type TemperatureUnits = "celsius" | "fahrenheit" | "kelvin";
 export interface userInfoType {
   userLocation: { latitude: number; longitude: number };
-  userPreferences: { themeMode: "light" | "dark" };
+  userPreferences: {
+    themeMode: "light" | "dark";
+    temperatureUnit: TemperatureUnits;
+  };
   userLocalForecast: ForecastData;
 }
 
 const initialState: userInfoType = {
   userLocation: { latitude: 0, longitude: 0 },
-  userPreferences: { themeMode: "light" },
+  userPreferences: { themeMode: "light", temperatureUnit: "celsius" },
   userLocalForecast: { list: [] },
 };
 //slice is a function that accepts an initial state, an object of reducer functions and a slice name
@@ -21,6 +25,12 @@ export const userInfoSlice = createSlice({
   reducers: {
     onThemeToggleChanged: (state, action: PayloadAction<"light" | "dark">) => {
       state.userPreferences.themeMode = action.payload;
+    },
+    onTemperatureUnitChanged: (
+      state,
+      action: PayloadAction<TemperatureUnits>
+    ) => {
+      state.userPreferences.temperatureUnit = action.payload;
     },
     onLocationObtained: (state, action: PayloadAction<GeolocationPosition>) => {
       state.userLocation.latitude = action.payload.coords.latitude;
@@ -40,6 +50,7 @@ export const userInfoSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   onThemeToggleChanged,
+  onTemperatureUnitChanged,
   onLocationObtained,
   onLocalForecastObtained,
 } = userInfoSlice.actions;

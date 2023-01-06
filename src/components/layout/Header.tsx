@@ -10,11 +10,18 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
-import { Drawer } from "@mui/material";
+import { Button, ButtonGroup, Drawer } from "@mui/material";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
+import {
+  onTemperatureUnitChanged,
+  TemperatureUnits,
+} from "../../app/store/userInfoSlice";
+import { useDispatch } from "react-redux";
 
 export function Header() {
+  const dispatch = useDispatch();
+
   const [openNav, setOpenNav] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -42,6 +49,10 @@ export function Header() {
 
   const handleNav = (state: boolean) => {
     setOpenNav(state);
+  };
+
+  const handleTemperatureUnitChange = (newState: TemperatureUnits) => {
+    dispatch(onTemperatureUnitChanged(newState));
   };
 
   const menuId = "primary-search-account-menu";
@@ -88,6 +99,7 @@ export function Header() {
           Forecast
         </Link>
       </MenuItem>
+
       <MenuItem onClick={handleMenuClose}>
         <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
           Search
@@ -151,8 +163,26 @@ export function Header() {
           >
             Weatherly
           </Typography>
-
           <Box sx={{ flexGrow: 1 }} />
+
+          <ButtonGroup
+            variant="contained"
+            aria-label="outlined button group"
+            size="small"
+            color="primary"
+            sx={{ marginRight: 3 }}
+          >
+            <Button onClick={() => handleTemperatureUnitChange("kelvin")}>
+              K
+            </Button>
+            <Button onClick={() => handleTemperatureUnitChange("celsius")}>
+              °C
+            </Button>
+            <Button onClick={() => handleTemperatureUnitChange("fahrenheit")}>
+              °F
+            </Button>
+          </ButtonGroup>
+
           <ThemeToggle />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

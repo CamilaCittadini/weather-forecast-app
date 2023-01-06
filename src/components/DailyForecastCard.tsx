@@ -9,8 +9,7 @@ import { WeatherTypes } from "../services/currentAndForecast";
 import { skyConditionIcon, TemperatureUnits } from "./WeatherCard";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { applyConversion, applyConversionUnit } from "./WeatherCard";
-import { useState } from "react";
-
+import { useUserPreferencesSelector } from "../app/store/userSelectors";
 interface dailyForecastCardProps {
   date?: string;
   dayOfTheWeek?: number;
@@ -32,8 +31,8 @@ export default function DailyForecastCard({
   windSpeed = 0,
   precipitation = 0,
 }: dailyForecastCardProps) {
-  const [temperatureUnit, setTemperatureUnit] =
-    useState<TemperatureUnits>("celsius");
+  const { temperatureUnit } = useUserPreferencesSelector();
+
   return (
     <Card sx={{ minWidth: 200, maxWidth: 200 }}>
       <CardContent>
@@ -113,17 +112,6 @@ export default function DailyForecastCard({
             </Stack>
           </Stack>
         </Typography>
-        <Stack direction={"row"} justifyContent="end" alignItems="center">
-          <ButtonGroup
-            variant="outlined"
-            aria-label="outlined button group"
-            size="small"
-          >
-            <Button onClick={() => setTemperatureUnit("kelvin")}>K</Button>
-            <Button onClick={() => setTemperatureUnit("celsius")}>°C</Button>
-            <Button onClick={() => setTemperatureUnit("fahrenheit")}>°F</Button>
-          </ButtonGroup>
-        </Stack>
       </CardContent>
     </Card>
   );
