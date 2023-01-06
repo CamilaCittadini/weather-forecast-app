@@ -5,6 +5,7 @@ import { getCity } from "../services/geoposition";
 import { useQuery } from "react-query";
 import WeatherCard from "../components/WeatherCard";
 import { getCurrentWeather } from "../services/currentAndForecast";
+import SkeletonCard from "../components/SkeletonCard";
 
 const Search = () => {
   const [inputCity, setInputCity] = useState<string>("");

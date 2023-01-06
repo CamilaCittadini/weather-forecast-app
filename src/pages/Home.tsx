@@ -3,11 +3,12 @@ import { useQuery } from "react-query";
 import { getCurrentWeather } from "../services/currentAndForecast";
 import { useUserLocation } from "../app/store/userSelectors";
 import WeatherCard from "../components/WeatherCard";
+import SkeletonCard from "../components/SkeletonCard";
 
 const Home = () => {
   const location = useUserLocation();
 
-  const { data: weather } = useQuery(
+  const { isLoading, data: weather } = useQuery(
     ["current-weather", location],
     () =>
       getCurrentWeather({
@@ -18,6 +19,10 @@ const Home = () => {
       enabled: !!location,
     }
   );
+
+  if (isLoading) {
+    return <SkeletonCard width={350} height={200} />;
+  }
 
   return (
     <div style={{ paddingTop: 30, paddingLeft: 30 }}>
